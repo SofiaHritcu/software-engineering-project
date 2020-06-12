@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="dialect">hospitalPharmacy.model.dialect.SQLiteDialect</property>
+        <property name="connection.driver_class">org.sqlite.JDBC</property>
+        <!--<property name="connection.url">jdbc:sqlite:D:\\ANUL II\\SEM2\\MPP\\MPP_tema6_proiect_SwimmingContest_java_Hibernate</property>-->
+        <property name="connection.url">jdbc:sqlite:hospitalPharmacy</property>
+
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+
+        <mapping class="hospitalPharmacy.model.User"/>
+        <mapping class="hospitalPharmacy.model.MedicalAssistance"/>
+        <mapping class="hospitalPharmacy.model.Pharmacist"/>
+        <mapping class="hospitalPharmacy.model.Order"/>
+
+    </session-factory>
+</hibernate-configuration>

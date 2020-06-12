@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:properties id="jdbcProps" location="classpath:hospitalPharmacyServer.properties"/>
+    <bean id="userRepo" class="hospitalPharmacy.persistence.repository.UserJdbcRepository">
+        <constructor-arg ref="jdbcProps"/>
+    </bean>
+    <bean id="medicalAssistanceRepo" class="hospitalPharmacy.persistence.repository.MedicalAssistanceJdbcRepository">
+        <constructor-arg ref="jdbcProps"/>
+    </bean>
+    <bean id="pharmacistRepo" class="hospitalPharmacy.persistence.repository.PharmacistJdbcRepository">
+        <constructor-arg ref="jdbcProps"/>
+    </bean>
+    <bean id="orderRepo" class="hospitalPharmacy.persistence.repository.OrderJdbcRepository">
+        <constructor-arg ref="jdbcProps"/>
+    </bean>
+    <bean id="hospitalPharmacyService" class="hospitalPharmacy.server.HospitalPharmacyServerImpl">
+        <constructor-arg ref="userRepo"/>
+        <constructor-arg ref="medicalAssistanceRepo"/>
+        <constructor-arg ref="pharmacistRepo"/>
+        <constructor-arg ref="orderRepo"/>
+    </bean>
+
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+
+        <property name="serviceName" value="HospitalPharmacy"/>
+        <property name="service" ref="hospitalPharmacyService"/>
+        <property name="serviceInterface" value="hospitalPharmacy.services.IHospitalPharmacyServices"/>
+        <property name="servicePort" value="1099"/>
+    </bean>
+</beans>
